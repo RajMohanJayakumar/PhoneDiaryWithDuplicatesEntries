@@ -46,18 +46,26 @@ public class PhoneDiary {
     public void add(){
         scan.nextLine();
         System.out.println("Enter the Name");
-        mName = scan.next();
+        mName = scan.nextLine();
         System.out.println("Enter the Phone Number");
         mPhonenumber = scan.next();
         System.out.println("Enter the Email Address");
         mEmail = scan.next();
+        scan.reset();
         mTemp=mName+"&/&"+mPhonenumber+"&/&"+mEmail;
         mPhoneBook.put(mName,mTemp);
+        for (String i: mPhoneBook.keySet()){
+            System.out.println(i);
+            System.out.println(mPhoneBook.get(i));
+        }
     }
 
     public void search(){
+//        scan.reset();
         System.out.println("Enter the Name to Search");
-        mTemp = mPhoneBook.get(scan.next());
+        Scanner ss = new Scanner(System.in);
+        String s = ss.nextLine();
+        mTemp = mPhoneBook.get(s);
         String lDetails[] = mTemp.split("&/&");
         System.out.println("Name : "+lDetails[0]);
         System.out.println("Phone Number : "+lDetails[1]);
