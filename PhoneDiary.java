@@ -1,8 +1,19 @@
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 public class PhoneDiary {
+
+    String mName;
+    String mEmail;
+    String mPhonenumber;
+    String mTemp;
+
+    Map<String,String> mPhoneBook = new HashMap<>();
+    Scanner scan = new Scanner(System.in);
     public void run() {
-        Scanner scan = new Scanner(System.in);
+
         while (true) {
+            System.out.println("--------------------------");
             System.out.println("Enter the Option:");
             System.out.println("1. Add Contact");
             System.out.println("2. Search Contact");
@@ -11,11 +22,17 @@ public class PhoneDiary {
             System.out.println("5. Remove a Contact");
             System.out.println("6. Exit");
             switch (scan.next()){
-                case "1":
-                case "2":
+                case "1":{
+                    this.add();
+                    break;
+                }
+                case "2":{
+                    this.search();
+                    break;
+                }
                 case "3":
                 case "4":
-                case "5":break;
+                case "5": break;
                 case "6":
                     System.out.println("Exiting Windows..");
                     return;
@@ -24,5 +41,27 @@ public class PhoneDiary {
                     System.out.println();
             }
         }
+    }
+
+    public void add(){
+        scan.nextLine();
+        System.out.println("Enter the Name");
+        mName = scan.next();
+        System.out.println("Enter the Phone Number");
+        mPhonenumber = scan.next();
+        System.out.println("Enter the Email Address");
+        mEmail = scan.next();
+        mTemp=mName+"&/&"+mPhonenumber+"&/&"+mEmail;
+        mPhoneBook.put(mName,mTemp);
+    }
+
+    public void search(){
+        System.out.println("Enter the Name to Search");
+        mTemp = mPhoneBook.get(scan.next());
+        String lDetails[] = mTemp.split("&/&");
+        System.out.println("Name : "+lDetails[0]);
+        System.out.println("Phone Number : "+lDetails[1]);
+        System.out.println("Email : "+lDetails[2]);
+
     }
 }
