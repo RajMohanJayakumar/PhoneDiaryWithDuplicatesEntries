@@ -4,7 +4,9 @@ import java.util.HashMap;
 public class Run{
     public static void main(String[] args) throws Exception {
 
-            PhoneDiary phoneDiary;
+            PhoneDiary phoneDiary = new PhoneDiary();
+
+            phoneDiary.run();
 //        try {
 //            File fi = new File("obj.txt");
 //            fi.createNewFile();
@@ -62,17 +64,17 @@ public class Run{
 //        oosi.writeObject(phoneDiary);
 
 
-        File fi = new File("obj.txt");
-        FileInputStream fis = new FileInputStream(fi);
-        ObjectInputStream ois = new ObjectInputStream(fis);
-        PhoneDiary phonebook = (PhoneDiary)ois.readObject();
-
-        phonebook.run();
-
-        File f = new File("obj.txt");
-        FileOutputStream fos = new FileOutputStream(f);
-        ObjectOutputStream oos = new ObjectOutputStream(fos);
-        oos.writeObject(phonebook);
+//        File fi = new File("obj.txt");
+//        FileInputStream fis = new FileInputStream(fi);
+//        ObjectInputStream ois = new ObjectInputStream(fis);
+//        PhoneDiary phonebook = (PhoneDiary)ois.readObject();
+//
+//        phonebook.run();
+//
+//        File f = new File("obj.txt");
+//        FileOutputStream fos = new FileOutputStream(f);
+//        ObjectOutputStream oos = new ObjectOutputStream(fos);
+//        oos.writeObject(phonebook);
 
     }
 }
