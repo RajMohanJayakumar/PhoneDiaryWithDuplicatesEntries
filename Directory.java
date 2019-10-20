@@ -3,13 +3,13 @@ import org.apache.commons.collections.map.MultiValueMap;
 
 import java.util.*;
 
- public class Directory {
+public class Directory {
 
-//     MultiMap mPhoneBook = new MultiValueMap();
+    //     MultiMap mPhoneBook = new MultiValueMap();
     Map<String, String> mPhoneBook = new HashMap<>();
-    Map<String,String> mName = new HashMap<String,String>();
+    Map<String, String> mName = new HashMap<String, String>();
     TreeSet<String> mOrdered = new TreeSet<>();
-//    ArrayList<String> mOrdered  = new ArrayList();
+    //    ArrayList<String> mOrdered  = new ArrayList();
     Pojo p = new Pojo();
     String mTemp;
     String lcomponent[];
@@ -31,7 +31,7 @@ import java.util.*;
                     System.out.println("Enter a Valid Phone Number");
                     continue invalid;
                 }
-                if(i==p.getmPhonenumber().length())
+                if (i == p.getmPhonenumber().length())
                     break;
             }
             break;
@@ -39,7 +39,7 @@ import java.util.*;
 
         //Email with Validation
         System.out.println("Enter the Email Address");
-        while(true) {
+        while (true) {
             p.setmEmail(scan.next());
             lcomponent = p.getmEmail().split("@");
 
@@ -53,23 +53,20 @@ import java.util.*;
         p.setmName(p.getmName().toLowerCase());
         mPhoneBook.put(p.getmEmail(), mTemp);
 
-        mName.put(p.getmName().substring(0, 1).toUpperCase() + p.getmName().substring(1),mName.get(p.getmName())+p.getmEmail()+"&/&");
+        mName.put(p.getmName().substring(0, 1).toUpperCase() + p.getmName().substring(1), mName.get(p.getmName()) + p.getmEmail() + "&/&");
         mOrdered.add(p.getmEmail());
-        for( String i:mName.keySet()){
-            System.out.println(i);
-        }
     }
 
-     public void search() {
+    public void search() {
         System.out.println("Enter the Name to Search");
-        while(true) {
+        while (true) {
             Scanner scan2 = new Scanner(System.in);
             mTemp = scan2.nextLine();
-            System.out.println("mTemp"+mTemp+"mName"+mName);
-            mTemp = mTemp.substring(0,1).toUpperCase()+mTemp.substring(1);
-            if (!mName.containsKey(mTemp))
+            mTemp = mTemp.substring(0, 1).toUpperCase() + mTemp.substring(1);
+            if (!mName.containsKey(mTemp)) {
                 System.out.println("Record Not Found..");
-            else
+                return;
+            } else
                 break;
         }
 
@@ -83,10 +80,10 @@ import java.util.*;
         System.out.format("%-20s", "Email");
         System.out.println();
         int count = 0;
-        for(String i: emailSplit){
+        for (String i : emailSplit) {
             count++;
-            mTemp = ((String)(mPhoneBook.get(i)));
-            String lDetails[] = ((String)(mPhoneBook.get(i))).split("&/&");
+            mTemp = ((String) (mPhoneBook.get(i)));
+            String lDetails[] = ((String) (mPhoneBook.get(i))).split("&/&");
             System.out.print(count);
             System.out.format("%6s", " ");
             System.out.format("%-20s", lDetails[0]);
@@ -95,23 +92,13 @@ import java.util.*;
             System.out.println();
 
         }
-
-//        if (mPhoneBook.containsKey(mTemp)) {
-//            mTemp = ((String)(mPhoneBook.get(mTemp)));
-//            String lDetails[] = mTemp.split("&/&");
-//            System.out.println("Name : " + lDetails[0]);
-//            System.out.println("Phone Number : " + lDetails[1]);
-//            System.out.println("Email : " + lDetails[2]);
-//        } else {
-//            System.out.println("Contact not found");
-//        }
     }
 
     public void remove() {
         System.out.println("Enter the email to remove the record");
         Scanner scan3 = new Scanner(System.in);
         mTemp = scan3.nextLine();
-        if(!mPhoneBook.containsKey(mTemp)){
+        if (!mPhoneBook.containsKey(mTemp)) {
             System.out.println("Record Not Found");
             return;
         }
@@ -121,16 +108,6 @@ import java.util.*;
 
     public void showAll() {
         int count = 0;
-//        Iterator i = new Iterator() {
-//            @Override
-//            public boolean hasNext() {
-//            }
-//
-//            @Override
-//            public Object next() {
-//                return null;
-//            }
-//        }
 
         System.out.print("No.");
         System.out.format("%6s", " ");
@@ -140,9 +117,8 @@ import java.util.*;
         System.out.println();
         for (String i : mOrdered) {
             count++;
-//            String lDetails[] = i.split("&/&");
 
-            String lDetails[] = ((String)(mPhoneBook.get(i))).split("&/&");
+            String lDetails[] = ((String) (mPhoneBook.get(i))).split("&/&");
             System.out.print(count);
             System.out.format("%6s", " ");
             System.out.format("%-20s", lDetails[0]);
@@ -156,7 +132,7 @@ import java.util.*;
         Scanner scan4 = new Scanner(System.in);
         System.out.println("Enter the email to edit");
         String mTempEmail = scan4.next();
-        if(!mPhoneBook.containsKey(mTempEmail)){
+        if (!mPhoneBook.containsKey(mTempEmail)) {
             System.out.println("--------------------------\nRecord Not Found");
             return;
         }
@@ -168,28 +144,20 @@ import java.util.*;
         switch (lTemp2 = scan4.nextInt()) {
             case 1:
             case 2:
-            case 3:{
-//                System.out.println(mPhoneBook.get(mTempEmail));
-                String lDetails[] = ((String)(mPhoneBook.get(mTempEmail))).split("&/&");
-//                System.out.println(lDetails.length);
+            case 3: {
+                String lDetails[] = ((String) (mPhoneBook.get(mTempEmail))).split("&/&");
                 System.out.println("Enter the new value:");
                 scan4.nextLine();
-                lDetails[lTemp2-1] = scan4.nextLine();
+                lDetails[lTemp2 - 1] = scan4.nextLine();
                 mPhoneBook.remove(lDetails[2]);
                 mOrdered.remove(mTempEmail);
                 mOrdered.add(lDetails[2]);
-                mPhoneBook.put(lDetails[2].substring(0,1).toUpperCase(),lDetails[0] + "&/&" + lDetails[1] + "&/&" + lDetails[2]);
+                mPhoneBook.put(lDetails[2].substring(0, 1).toUpperCase(), lDetails[0] + "&/&" + lDetails[1] + "&/&" + lDetails[2]);
                 break;
             }
-            case 4:{
+            case 4: {
                 return;
             }
         }
     }
-
-//    public void map(){
-//        for(Map.Entry<String, String> i : mPhoneBook.entrySet()){
-//            System.out.println(i);
-//        }
-//    }
 }
