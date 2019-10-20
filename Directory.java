@@ -148,7 +148,12 @@ public class Directory {
                 String lDetails[] = ((String) (mPhoneBook.get(mTempEmail))).split("&/&");
                 System.out.println("Enter the new value:");
                 scan4.nextLine();
+
+                if(lTemp2 == 1){
+                    mOrdered.remove(lDetails[0]);
+                }
                 lDetails[lTemp2 - 1] = scan4.nextLine();
+
                 mPhoneBook.remove(lDetails[2]);
                 mOrdered.remove(mTempEmail);
                 mOrdered.add(lDetails[2]);
