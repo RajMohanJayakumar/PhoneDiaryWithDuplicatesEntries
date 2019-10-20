@@ -1,12 +1,52 @@
 import java.io.*;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
 
 public class Run{
+
     public static void main(String[] args) throws Exception {
 
-            PhoneDiary phoneDiary = new PhoneDiary();
-
+        PhoneDiary phoneDiary = new PhoneDiary();
             phoneDiary.run();
+
+//        boolean isContactExists = false;
+//
+//        File file = new File("contacts.txt");
+//        if (file.length() == 0) {
+//            System.out.println("File is empty !!! creating new file...");
+//            try {
+//                file.createNewFile();
+//                saveContact(file);
+//            } catch (IOException e) {
+//                System.out.println("Exception is caught" + e);
+//            }
+//        } else {
+//            try {
+//                FileInputStream inputFile = new FileInputStream(file);
+//                ObjectInputStream in = new ObjectInputStream(inputFile);
+//                saveContact(file);
+//                in.close();
+//                inputFile.close();
+//            } catch (Exception ex) {
+//                System.out.println("Exception is caught" + ex);
+//            }
+//        }
+//    }
+//
+//    private static void saveContact(File file) {
+//        try {
+//            FileOutputStream outputFile = new FileOutputStream(file);
+//            ObjectOutputStream out = new ObjectOutputStream(outputFile);
+//            // Method for serialization of object
+//            phoneDiary.run();
+//            System.out.println("Details successfully saved and has been serialized");
+//            out.flush();
+//            out.close();
+//            outputFile.close();
+//        } catch (IOException ex) {
+//            System.out.println("IOException is caught");
+//        }
 //        try {
 //            File fi = new File("obj.txt");
 //            fi.createNewFile();

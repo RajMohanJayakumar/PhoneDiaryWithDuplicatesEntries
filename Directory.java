@@ -12,6 +12,7 @@ import java.util.*;
 //    ArrayList<String> mOrdered  = new ArrayList();
     Pojo p = new Pojo();
     String mTemp;
+    String lcomponent[];
 
     public void add() {
         Scanner scan = new Scanner(System.in);
@@ -22,26 +23,58 @@ import java.util.*;
         p.setmName(mTemp);
 
         System.out.println("Enter the Phone Number");
-        p.setmPhonenumber(scan.next());
+        invalid:
+        while (true) {
+            p.setmPhonenumber(scan.next());
+            for (int i = 0; i < p.getmPhonenumber().length(); i++) {
+                if (!('0' <= p.getmPhonenumber().charAt(i) && p.getmPhonenumber().charAt(i) <= '9') || p.getmPhonenumber().charAt(i) == '+') {
+                    System.out.println("Enter a Valid Phone Number");
+                    continue invalid;
+                }
+                if(i==p.getmPhonenumber().length())
+                    break;
+            }
+            break;
+        }
 
+        //Email with Validation
         System.out.println("Enter the Email Address");
-        p.setmEmail(scan.next());
+        while(true) {
+            p.setmEmail(scan.next());
+            lcomponent = p.getmEmail().split("@");
+
+            if (!(lcomponent.length == 2))
+                System.out.println("Enter a Valid Email");
+            else
+                break;
+        }
 
         mTemp = p.getmName() + "&/&" + p.getmPhonenumber() + "&/&" + p.getmEmail();
         p.setmName(p.getmName().toLowerCase());
         mPhoneBook.put(p.getmEmail(), mTemp);
 
-        mName.put(p.getmName(),mName.get(p.getmName())+p.getmEmail()+"&/&");
-        System.out.println(mName.get(p.getmName()));
+        mName.put(p.getmName().substring(0,1).toUpperCase(),mName.get(p.getmName())+p.getmEmail()+"&/&");
         mOrdered.add(p.getmEmail());
+        for( String i:mName.keySet()){
+            System.out.println(i);
+        }
     }
 
-    public void search() {
+     String mTemp1;
+     public void search() {
         System.out.println("Enter the Name to Search");
-        Scanner scan2 = new Scanner(System.in);
-        mTemp = scan2.nextLine();
-
-        mTemp = mName.get(mTemp).substring(4);
+        while(true) {
+            Scanner scan2 = new Scanner(System.in);
+            mTemp = scan2.nextLine();
+            System.out.println("mTemp"+mTemp+"mName"+mName);
+            mTemp1 = mTemp.substring(0,1).toUpperCase();
+            if (!mName.containsKey(mTemp1))
+                System.out.println("Record Not Found..");
+            else
+                break;
+        }
+         System.out.println("1111mTemp"+mTemp+"mName"+mName);
+        mTemp = mName.get(mTemp1).substring(4);
         String emailSplit[] = mTemp.split("&/&");
 //        System.out.println(emailSplit[1]);
         System.out.print("No.");
@@ -79,6 +112,10 @@ import java.util.*;
         System.out.println("Enter the email to remove the record");
         Scanner scan3 = new Scanner(System.in);
         mTemp = scan3.nextLine();
+        if(!mPhoneBook.containsKey(mTemp)){
+            System.out.println("Record Not Found");
+            return;
+        }
         mPhoneBook.remove(mTemp);
         mOrdered.remove(mTemp);
     }
