@@ -50,7 +50,7 @@ public class Directory {
         }
 
         mTemp = p.getmName() + "&/&" + p.getmPhonenumber() + "&/&" + p.getmEmail();
-        p.setmName(p.getmName().toLowerCase());
+//        p.setmName(p.getmName().toLowerCase());
         mPhoneBook.put(p.getmEmail(), mTemp);
 
         mName.put(p.getmName().substring(0, 1).toUpperCase() + p.getmName().substring(1), mName.get(p.getmName()) + p.getmEmail() + "&/&");
@@ -90,21 +90,39 @@ public class Directory {
             System.out.format("%-20s", lDetails[1]);
             System.out.format("%-20s", lDetails[2]);
             System.out.println();
-
         }
     }
 
-    public void remove() {
+    public void remove(){
         System.out.println("Enter the email to remove the record");
         Scanner scan3 = new Scanner(System.in);
         mTemp = scan3.nextLine();
+        remove(mTemp);
+    }
+    public void remove(String mTemp) {
+
         if (!mPhoneBook.containsKey(mTemp)) {
             System.out.println("Record Not Found");
             return;
         }
-        mPhoneBook.remove(mTemp);
-        mOrdered.remove(mTemp);
-    }
+        ///////////////////////////////////////////////////////////////////////
+        String mTempstr="null";
+        String lTemp[] = mPhoneBook.get(mTemp).split("&/&");
+        String lTemp2[] = mName.get(lTemp[0]).substring(4).split("&/&");
+        if(lTemp2.length==1){
+            mName.remove(lTemp[0]);
+        }
+        else {
+            for (int i = 0; i < lTemp.length; i++) {
+                if (!(lTemp[i] == mTemp))
+                    mTempstr = mTempstr + lTemp + "&/&";
+            }
+            mName.put(lTemp[0], mTempstr);
+        }
+            mPhoneBook.remove(mTemp);
+            mOrdered.remove(mTemp);
+            /////////////////////////////////////////////////////////////////////////
+        }
 
     public void showAll() {
         int count = 0;
@@ -142,22 +160,81 @@ public class Directory {
         System.out.println("3.Edit Email");
         System.out.println("4.Return to Phonebook");
         switch (lTemp2 = scan4.nextInt()) {
-            case 1:
-            case 2:
-            case 3: {
+            case 1:{
                 String lDetails[] = ((String) (mPhoneBook.get(mTempEmail))).split("&/&");
-                System.out.println("Enter the new value:");
-                scan4.nextLine();
 
-                if(lTemp2 == 1){
-                    mOrdered.remove(lDetails[0]);
-                }
-                lDetails[lTemp2 - 1] = scan4.nextLine();
+                String temp2[] = mName.get(lDetails[0]).split("&/&");
 
                 mPhoneBook.remove(lDetails[2]);
+                Scanner scan5 = new Scanner(System.in);
+                System.out.println("Enter new Name");
+                lDetails[0] = scan5.nextLine();
+
+                mPhoneBook.put(lDetails[2],lDetails[0] + "&/&" + lDetails[1] + "&/&" + lDetails[2]);
+
+                if(temp2.length == 1){
+                    mName.put(lDetails[0],lDetails[2]);
+                }
+                else{
+                    String str = "null";
+                    for(int i=0;i<temp2.length;i++){
+                        if(temp2[i]==lDetails[2])
+                            str = str+temp2[i]+"&/&";
+                    }
+                    mName.put(lDetails[0],str);
+                }
+                break;
+            }
+            case 2:{
+                Scanner scan5 = new Scanner(System.in);
+                String lDetails[] = ((String) (mPhoneBook.get(mTempEmail))).split("&/&");
+                System.out.println("Enter new Phone Number");
+                mPhoneBook.put(lDetails[2],lDetails[0]+"&/&"+scan5.nextLine()+"&/&"+lDetails[2]);
+                break;
+            }
+            case 3: {
+                Scanner scan5 = new Scanner(System.in);
+                String lcomp[] = ((String) (mPhoneBook.get(mTempEmail))).split("&/&");
+                System.out.println("Enter the new Email:");
+                String str = scan5.nextLine();
+
+//                String lcomp[] = mPhoneBook.get(str).split("&/&");
+
+                lcomp[2] = str;
+
+                mPhoneBook.remove(mTempEmail);
+                mPhoneBook.put(lcomp[2],lcomp[0]+"&/&"+lcomp[1]+"&/&"+lcomp[2]);
+
                 mOrdered.remove(mTempEmail);
-                mOrdered.add(lDetails[2]);
-                mPhoneBook.put(lDetails[2].substring(0, 1).toUpperCase(), lDetails[0] + "&/&" + lDetails[1] + "&/&" + lDetails[2]);
+                mOrdered.add(lcomp[2]);
+
+                String lt[] = mName.get(lcomp[0]).substring(4).split("&/&");
+                if(lt.length==1){
+                    mName.remove(lcomp[0]);
+                    mName.put(lcomp[0],"null"+lcomp[2]+"&/&");
+                }
+                else{
+                    String str1 = "null"+str+"&/&";
+                    for(int i=0;i<lt.length;i++){
+                        if(!(lt[i]==mTempEmail)){
+                            str1 = str1+lt[i];
+                        }
+                    }
+                    mName.remove(lcomp[0]);
+                    mName.put(lcomp[0],str1);
+                }
+
+//                if(lTemp2 == 1){
+//                    mOrdered.remove(lDetails[2]);/*Note*/
+//                    remove(lDetails[2]);/*Note*/
+//                }
+//                    lDetails[lTemp2 - 1] = scan4.nextLine();
+//
+////                mPhoneBook.remove(lDetails[2]);
+////                mOrdered.remove(mTempEmail);
+//
+//                mOrdered.add(lDetails[2]);
+//                mPhoneBook.put(lDetails[2].substring(0, 1).toUpperCase(), lDetails[0] + "&/&" + lDetails[1] + "&/&" + lDetails[2]);
                 break;
             }
             case 4: {
